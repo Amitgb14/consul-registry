@@ -3,6 +3,7 @@ package registry
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	consul "github.com/hashicorp/consul/api"
@@ -16,14 +17,14 @@ type Client struct {
 }
 
 // NewConsulClient create new consul client
-func NewConsulClient(address, interval, timeout string) (*Client, error) {
+func NewConsulClient(address string, interval, timeout int) (*Client, error) {
 	config := consul.DefaultConfig()
 	config.Address = address
 	c, err := consul.NewClient(config)
 	if err != nil {
 		return nil, err
 	}
-	return &Client{consul: c, interval: interval, timeout: timeout}, nil
+	return &Client{consul: c, interval: strconv.Itoa(interval), timeout: strconv.Itoa(timeout)}, nil
 
 }
 
